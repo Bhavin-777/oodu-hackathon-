@@ -25,6 +25,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     // Single subscription for the whole app — auth state is a global
     // singleton, so Context (not TanStack Query) is the natural fit here.
+    // Also still needed to handle page refresh / already-logged-in sessions,
+    // where there's no explicit signIn() call to hang the profile fetch off of.
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setFirebaseUser(user)
       if (user) {
@@ -39,7 +41,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const signIn = async (email: string, password: string) => {
-    await logIn(email, password)
+    // logIn() is assumed to return the signed-in Firebase User (or
+    // UserCredential.user) — check auth.service.ts's return type if this
+    // doesn't match.
+    const user = await logIn(email, password)
+    const userProfile = await fetchUserProfile(user)
+    // Set state directly so signIn()'s promise doesn't resolve until role
+    // is actually available — callers like LoginPage can safely navigate
+    // right after awaiting this. onAuthStateChanged will also fire and
+    // redundantly re-fetch the same profile; that's harmless (idempotent),
+    // just a minor duplicate read.
+    setFirebaseUser(user)
+    setProfile(userProfile)
   }
 
   const register = async (name: string, email: string, password: string, role: Role) => {

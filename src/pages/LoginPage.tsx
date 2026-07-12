@@ -26,8 +26,14 @@ export function LoginPage() {
     try {
       await signIn(values.email, values.password)
       navigate('/', { replace: true })
-    } catch {
-      setFormError('Invalid email or password.')
+    } catch (error) {
+      console.error(error)
+
+      if (error instanceof Error) {
+        setFormError(error.message)
+      } else {
+        setFormError("Unknown error")
+      }
     }
   }
 
