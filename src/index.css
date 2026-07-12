@@ -1,0 +1,198 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ---------------------------------------------------------------
+   TransitOps design tokens
+   Direction: dark-first "ops console" — Linear/Stripe/Vercel-adjacent,
+   but tuned to the domain: a fleet's status is the single most
+   important thing on screen, so status color threads through every
+   surface (see --status-* and the "status rail" utility below).
+----------------------------------------------------------------- */
+:root {
+  --radius: 0.625rem;
+
+  /* Base surfaces */
+  --background: #f7f8fa;
+  --foreground: #12151c;
+  --card: #ffffff;
+  --card-foreground: #12151c;
+  --popover: #ffffff;
+  --popover-foreground: #12151c;
+
+  /* Brand / accent — "transit teal" */
+  --primary: #0f9488;
+  --primary-foreground: #ffffff;
+  --secondary: #eef1f5;
+  --secondary-foreground: #12151c;
+  --muted: #eef1f5;
+  --muted-foreground: #667085;
+  --accent: #eef1f5;
+  --accent-foreground: #12151c;
+
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --border: #e3e6eb;
+  --input: #e3e6eb;
+  --ring: #0f9488;
+
+  /* Fleet/entity status colors — the platform's signature language.
+     Used as left-border "status rails" on vehicle/driver/trip cards
+     and table rows, and as dot indicators in the dashboard KPIs. */
+  --status-available: #0f9488;
+  --status-on-trip: #3b6fe0;
+  --status-in-shop: #d97706;
+  --status-retired: #6b7280;
+  --status-suspended: #dc2626;
+  --status-draft: #8b93a1;
+  --status-cancelled: #9f1239;
+
+  --chart-1: #0f9488;
+  --chart-2: #3b6fe0;
+  --chart-3: #d97706;
+  --chart-4: #9333ea;
+  --chart-5: #dc2626;
+
+  --sidebar: #ffffff;
+  --sidebar-foreground: #12151c;
+  --sidebar-primary: #0f9488;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #eef1f5;
+  --sidebar-accent-foreground: #12151c;
+  --sidebar-border: #e3e6eb;
+  --sidebar-ring: #0f9488;
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+.dark {
+  --background: #0b0e14;
+  --foreground: #e4e7ec;
+  --card: #12151c;
+  --card-foreground: #e4e7ec;
+  --popover: #12151c;
+  --popover-foreground: #e4e7ec;
+
+  --primary: #2dd4bf;
+  --primary-foreground: #06120f;
+  --secondary: #1a1f29;
+  --secondary-foreground: #e4e7ec;
+  --muted: #1a1f29;
+  --muted-foreground: #8b93a1;
+  --accent: #1a1f29;
+  --accent-foreground: #e4e7ec;
+
+  --destructive: #ef4444;
+  --destructive-foreground: #fef2f2;
+  --border: #1e242e;
+  --input: #1e242e;
+  --ring: #2dd4bf;
+
+  --status-available: #2dd4bf;
+  --status-on-trip: #5b8def;
+  --status-in-shop: #f5a524;
+  --status-retired: #64748b;
+  --status-suspended: #ef4444;
+  --status-draft: #8b93a1;
+  --status-cancelled: #fb7185;
+
+  --chart-1: #2dd4bf;
+  --chart-2: #5b8def;
+  --chart-3: #f5a524;
+  --chart-4: #c084fc;
+  --chart-5: #ef4444;
+
+  --sidebar: #0e1119;
+  --sidebar-foreground: #e4e7ec;
+  --sidebar-primary: #2dd4bf;
+  --sidebar-primary-foreground: #06120f;
+  --sidebar-accent: #1a1f29;
+  --sidebar-accent-foreground: #e4e7ec;
+  --sidebar-border: #1e242e;
+  --sidebar-ring: #2dd4bf;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-status-available: var(--status-available);
+  --color-status-on-trip: var(--status-on-trip);
+  --color-status-in-shop: var(--status-in-shop);
+  --color-status-retired: var(--status-retired);
+  --color-status-suspended: var(--status-suspended);
+  --color-status-draft: var(--status-draft);
+  --color-status-cancelled: var(--status-cancelled);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-feature-settings: "cv11", "ss01";
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection {
+    @apply bg-primary/25;
+  }
+}
+
+/* Status rail — the platform's signature: a colored left border that
+   encodes entity status at a glance on cards and table rows. */
+@layer components {
+  .status-rail {
+    border-left-width: 3px;
+    border-left-style: solid;
+  }
+  .status-rail-available { border-left-color: var(--status-available); }
+  .status-rail-on-trip { border-left-color: var(--status-on-trip); }
+  .status-rail-in-shop { border-left-color: var(--status-in-shop); }
+  .status-rail-retired { border-left-color: var(--status-retired); }
+  .status-rail-suspended { border-left-color: var(--status-suspended); }
+  .status-rail-draft { border-left-color: var(--status-draft); }
+  .status-rail-cancelled { border-left-color: var(--status-cancelled); }
+}
