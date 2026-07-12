@@ -1,0 +1,13 @@
+/* src/styles/form-input.css
+ *
+ * Optional: DriverForm/TripForm/CompleteTripModal use a `.form-input` class
+ * for inputs/selects. If the project's global stylesheet already defines
+ * one, ignore this file. Otherwise import this once (e.g. in main.tsx)
+ * alongside Tailwind's base/components/utilities.
+ */
+
+.form-input {
+  @apply w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900
+    placeholder:text-slate-400 focus:border-slate-500 focus:outline-none
+    focus:ring-2 focus:ring-slate-200;
+}
